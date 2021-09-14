@@ -7,4 +7,5 @@
 
 import Foundation
 
-public let REGEX = "[0-9]{1,}[^A-Za-z0-9_][0-9]{1,}"
+public let REGEX_COORDINATE = "[^A-Za-z0-9_]{1}[0-9]{1,}[^A-Za-z0-9_][0-9]{1,}[^A-Za-z0-9_]{1}"
+public let REGEX_MAP_SIZE = "[0-9]{1,}[a-z]{1}[0-9]{1,}"

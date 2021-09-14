@@ -8,13 +8,8 @@
 import Foundation
 
 public class PizzaDeliveryBot {
-    
-    var orders: [Location]! {
-        didSet {
-            print("Hey, just got the locations. I'm on my way")
-        }
-    }
-    
+    var mapSize: Location!
+    var orders: [Location]!
     var currentLocation: Location = Location(x: 0, y: 0)
     
     public init() {}
@@ -48,12 +43,17 @@ public class PizzaDeliveryBot {
     func startDelivery() {
         print("startDelivery")
         getDeliveryProgress()
-        guard let orderList = orders else {
+        guard let orderList = orders, let map = mapSize else {
             print("There is no pizza for delivery =(")
             return
         }
         
         orderList.forEach { order in
+            if map.x < order.x || map.y < order.y {
+                print("Unfortunately it's to far for delivery. Moving to the next order")
+                return
+            }
+
             let yRoute = order.y - currentLocation.y
             let xRoute = order.x - currentLocation.x
                         
@@ -85,6 +85,9 @@ public class PizzaDeliveryBot {
     
     private func returnToBase() {
         print("That's it, going back to the base")
+        if orders.count > 0 {
+            print("Excuse but there is not delivered pizza. Seems that location was too far.")
+        }
         self.currentLocation = Location(x: 0, y: 0)
     }
     
